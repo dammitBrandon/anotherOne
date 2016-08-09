@@ -91,17 +91,17 @@ export default class App extends Component {
                 <NavItem eventKey={4}>About Us</NavItem>
               </LinkContainer>
               <LinkContainer to="/player">
-                <NavItem eventKey={5}>Media Player</NavItem>
+                <NavItem eventKey={99}>Player</NavItem>
               </LinkContainer>
 
 
               {!user &&
               <LinkContainer to="/login">
-                <NavItem eventKey={6}>Login</NavItem>
+                <NavItem eventKey={5}>Login</NavItem>
               </LinkContainer>}
               {user &&
               <LinkContainer to="/logout">
-                <NavItem eventKey={7} className="logout-link" onClick={this.handleLogout}>
+                <NavItem eventKey={6} className="logout-link" onClick={this.handleLogout}>
                   Logout
                 </NavItem>
               </LinkContainer>}
