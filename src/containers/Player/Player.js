@@ -12,7 +12,9 @@ export default class Player extends Component {
 
         <div className="pcast-player">
           <div className="pcast-player-controls">
-            <button className="pcast-play"><i className="fa fa-play"></i><span>Play</span></button>
+            <button className="pcast-play">
+              <i className="fa fa-play"></i><span>Play</span>
+            </button>
             <button className="pcast-pause"><i className="fa fa-pause"></i><span>Pause</span></button>
             <button className="pcast-rewind"><i className="fa fa-fast-backward"></i><span>Rewind</span></button>
             <span className="pcast-currenttime pcast-time">00:00</span>
