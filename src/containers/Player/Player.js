@@ -1,18 +1,26 @@
 import React, {Component} from 'react';
 import { AudioPlayer } from 'components';
 import Helmet from 'react-helmet';
+// import songs from './../../data/songs.json';
 
 export default class Player extends Component {
-  playPlayer = () => {
-    console.log('clicked player button');
+  componentWillMount = () => {
+    console.log('AudioPlayer#componentWillMount');
   }
+
   render() {
+    let songs = [
+      {
+        name: 'song1',
+        url: 'http://s3.amazonaws.com/ShopTalk/080_rapidfire_19.mp3'
+      }
+    ];
     return (
       <div className="container">
         <Helmet title="Player"/>
         <h1>Media Player</h1>
 
-        <AudioPlayer/>
+        <AudioPlayer songs={songs} />
       </div>
     );
   }

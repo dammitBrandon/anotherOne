@@ -9,6 +9,7 @@ export default class SongItem extends Component {
   }
 
   render() {
+    const styles = require('./audioPlayer.scss');
     let currentSongIndex = this.props.currentSongIndex;
     let isSelected = this.props.currentSongIndex == this.props.eventKey;
     let components = [];
@@ -16,16 +17,16 @@ export default class SongItem extends Component {
     if (isSelected && this.props.isPlaying) {
       components[0] = <Glyphicon className='audio-song-item-icon active' glyph='play'/>;
     } else {
-      components[0] = <span className='audio-song-item-not-selected'></span>;
+      components[0] = <span className={styles.audioSongItemNotSelected}></span>;
     }
 
-    components[1] = <span className='audio-song-item-label'>{this.props.name}</span>;
+    components[1] = <span className={styles.audioSongItemLabel}>{this.props.name}</span>;
 
     let classes = classnames({
-      'audio-song-item': true,
+      'audioSongItem': true,
       'active': isSelected
     });
-    
+
     return (
       <MenuItem className={classes} eventKey={this.props.eventKey} onCLick={this.props.onSongItemClick}>
         { components }

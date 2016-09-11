@@ -1,6 +1,9 @@
 import React, {Component, PropTypes} from 'react';
 import ProgressBar from 'react-bootstrap/lib/ProgressBar';
-import classnames from 'classnames';
+import classnames from 'classnames/bind';
+const styles = require('./audioPlayer.scss');
+
+let cx = classnames.bind(styles);
 
 export default class PlayerProgressBar extends Component {
   constructor(props) {
@@ -25,7 +28,7 @@ export default class PlayerProgressBar extends Component {
       return;
     }
 
-    let container = $(this.refs.progressBar.getDOMNode());
+    let container = $(this.refs.playerProgressBar.getDOMNode());
     let containerStartX = container.offset().left;
     let percent = (e.clientX - containerStartX) / container.width();
     percent = percent >= 1 ? 1 : percent;
@@ -33,16 +36,17 @@ export default class PlayerProgressBar extends Component {
   }
 
   render() {
+    const styles = require('./audioPlayer.scss');
     let percent = this.props.percent * 100;
     let style = { width: percent + "%" };
-    let classes = classnames({
-      'audio-progress-container': true,
+    let classes = cx({
+      'audioProgressContainer': true,
       'pull-left': true
     });
 
     return (
-      <div ref='progressBar' className={classes} style={this.props.progressStyle} onClick={this.seekTo}>
-        <div className='audio-progress' style={style}></div>
+      <div ref='playerProgressBar' className={classes} style={this.props.progressStyle} onClick={this.seekTo}>
+        <div className={styles.audioProgress} style={style}></div>
       </div>
     );
   }

@@ -1,0 +1,157 @@
+$common-padding: 5px;
+$animate-sec: 1.5s;
+
+.audioPlayer {
+  max-width: 324px;
+  background: #eeeeee;
+  vertical-align: middle;
+  padding: $common-padding;
+}
+
+.audioButtonPanel {
+  padding-top: 2px;
+}
+
+.audioRefreshAnimate {
+  -webkit-animation: rotating $animate-sec linear infinite;
+  -moz-animation: rotating $animate-sec linear infinite;
+  -ms-animation: rotating $animate-sec linear infinite;
+  -o-animation: rotating $animate-sec linear infinite;
+  animation: rotating $animate-sec linear infinite;
+}
+
+.audioProgressContainer {
+  float: left;
+  height: 34px;
+  border-right: 1px solid #aaaaaa;
+  border-left: 1px solid #aaaaaa;
+  width: 235px;
+}
+
+.audioProgressContainerShortWidth {
+  width: 130px;
+}
+
+.audioProgress {
+  background: #666666;
+  width: 100%;
+  height: 100%;
+}
+
+.audioSongsList {
+  float: left;
+  margin-left: $common-padding;
+}
+
+.audioSongItemNotSelected {
+  float: left;
+  display: block;
+  width: 14px;
+  height: 1px;
+}
+
+.audioSongItemLabel {
+  padding-left: $common-padding;
+}
+
+.audioVolumeBarContainer {
+  float: left;
+  padding-left: $common-padding;
+  padding-top: 2px;
+
+  .btn:focus {
+    background-color: #fff;
+    outline: none;
+  }
+
+  .audioVolumeBar {
+    position: absolute;
+    z-index: 1001;
+    background: #ddd;
+  }
+
+  .audioVolumeBarHide {
+    display: none;
+  }
+
+  .audioVolumePercentContainer {
+    border-top: 1px solid #aaa;
+    border-bottom: 1px solid #aaa;
+    width: 34px;
+    height: 100px;
+    position: relative;
+    cursor: pointer;
+  }
+
+  .audioVolumeMinMax {
+    width: 100%;
+    height: 30px;
+    text-align: center;
+    cursor: pointer;
+    span {
+      top: 6px;
+    }
+  }
+
+  .audioVolumePercent {
+    width: 100%;
+    bottom: 0;
+    top: 50%;
+    background: #666;
+    position: absolute;
+  }
+
+}
+
+.audioDescContainer {
+  width: 100%;
+  vertical-align: middle;
+  padding-top: 3px;
+}
+
+.audioTime {
+  margin-left: $common-padding;
+}
+
+.audioNameLabel {
+  max-width: 180px;
+  height: 100%;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  -o-text-overflow: ellipsis;
+  overflow: hidden;
+}
+
+@keyframes rotating {
+  from {
+    transform: rotate(0deg);
+    -ms-transform: rotate(0deg);
+    -moz-transform: rotate(0deg);
+    -webkit-transform: rotate(0deg);
+    -o-transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+    -ms-transform: rotate(360deg);
+    -moz-transform: rotate(360deg);
+    -webkit-transform: rotate(360deg);
+    -o-transform: rotate(360deg);
+  }
+}
+
+@-webkit-keyframes rotating {
+  from {
+    transform: rotate(0deg);
+    -ms-transform: rotate(0deg);
+    -moz-transform: rotate(0deg);
+    -webkit-transform: rotate(0deg);
+    -o-transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+    -ms-transform: rotate(360deg);
+    -moz-transform: rotate(360deg);
+    -webkit-transform: rotate(360deg);
+    -o-transform: rotate(360deg);
+  }
+}

@@ -9,10 +9,12 @@ export default class SongList extends Component {
   }
 
   hideDropdownMenu = () => {
+    console.log('SongList#hideDropdownMenu');
     this.refs.dropdownButton.setDropdownState(false);
   }
 
  render() {
+   const styles = require('./audioPlayer.scss');
    let songs = [];
    let currentSongIndex = this.props.currentSongIndex;
    let isPlaying = this.props.isPlaying;
@@ -23,7 +25,7 @@ export default class SongList extends Component {
      let songName = SongFormatter.getSongName(song);
      songName = songCount > 1 ? (index + 1) + '. ' + songName : songName;
 
-     return <SongItem currentSongIndex={currentSongIndexs}
+     return <SongItem currentSongIndex={currentSongIndex}
                       eventKey={index}
                       name={songName}
                       isPlaying={isPlaying}
@@ -32,7 +34,7 @@ export default class SongList extends Component {
    }, this);
 
    return (
-     <div className='audio-songs-list'>
+     <div className={styles.audioSongsList}>
        <DropDownButton ref='dropdownButton'>
          {songs}
        </DropDownButton>

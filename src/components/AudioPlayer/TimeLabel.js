@@ -7,7 +7,7 @@ export default class TimeLabel extends Component {
   }
 
   render() {
-    let classes = 'audio-time pull-right';
+    const styles = require('./audioPlayer.scss');
 
     if (this.props.seek == undefined || !this.props.duration) {
       return (
@@ -19,7 +19,7 @@ export default class TimeLabel extends Component {
     let duration = TimeFormatter(this.props.duration);
 
     return (
-      <span className={classes}>{seek} / {duration}</span>
+      <span className={styles.audioTime + ' pull-right'}>{seek} / {duration}</span>
     );
   }
 }

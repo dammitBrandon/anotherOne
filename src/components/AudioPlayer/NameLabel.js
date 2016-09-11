@@ -3,8 +3,9 @@ import Label from 'react-bootstrap/lib/Label';
 
 export default class NameLabel extends Component {
   render() {
+    const styles = require('./audioPlayer.scss');
     return (
-      <span className='audio-name-label pull-left'>{this.props.name}</span>
+      <span className={styles.audioNameLabel + ' pull-left'}>{this.props.name}</span>
     );
   }
 }

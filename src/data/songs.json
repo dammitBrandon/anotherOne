@@ -1,0 +1,8 @@
+{
+  "songs": [
+    {
+      "name": "test1",
+      "url": "http://s3.amazonaws.com/ShopTalk/080_rapidfire_19.mp3"
+    }
+  ]
+}
