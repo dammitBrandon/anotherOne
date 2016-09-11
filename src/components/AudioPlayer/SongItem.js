@@ -1,7 +1,10 @@
 import React, {Component, PropTypes} from 'react';
 import Glyphicon from 'react-bootstrap/lib/Glyphicon';
-import classnames from 'classnames';
+import classnames from 'classnames/bind';
 import MenuItem from 'react-bootstrap/lib/MenuItem';
+const styles = require('./audioPlayer.scss');
+
+let cx = classnames.bind(styles);
 
 export default class SongItem extends Component {
   constructor(props) {
@@ -9,8 +12,6 @@ export default class SongItem extends Component {
   }
 
   render() {
-    const styles = require('./audioPlayer.scss');
-    let currentSongIndex = this.props.currentSongIndex;
     let isSelected = this.props.currentSongIndex == this.props.eventKey;
     let components = [];
 
@@ -22,7 +23,7 @@ export default class SongItem extends Component {
 
     components[1] = <span className={styles.audioSongItemLabel}>{this.props.name}</span>;
 
-    let classes = classnames({
+    let classes = cx({
       'audioSongItem': true,
       'active': isSelected
     });

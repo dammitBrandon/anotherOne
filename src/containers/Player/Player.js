@@ -3,6 +3,7 @@ import { AudioPlayer } from 'components';
 import Helmet from 'react-helmet';
 // import songs from './../../data/songs.json';
 
+
 export default class Player extends Component {
   componentWillMount = () => {
     console.log('AudioPlayer#componentWillMount');
