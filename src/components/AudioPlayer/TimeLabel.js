@@ -15,8 +15,8 @@ export default class TimeLabel extends Component {
       );
     }
 
-    let seek = TimeFormatter(this.props.seek);
-    let duration = TimeFormatter(this.props.duration);
+    let seek = TimeFormatter.secondsToTime(this.props.seek);
+    let duration = TimeFormatter.secondsToTime(this.props.duration);
 
     return (
       <span className={styles.audioTime + ' pull-right'}>{seek} / {duration}</span>

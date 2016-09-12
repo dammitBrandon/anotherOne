@@ -229,7 +229,7 @@ export default class AudioPlayer extends Component {
     clearInterval(this.interval);
   };
 
-  seekTo = () => {
+  seekTo = (percent) => {
     console.log('AudioPlayer#seekTo');
     let seek = this.state.duration * percent;
     this.howler.seek(seek);
@@ -263,6 +263,8 @@ export default class AudioPlayer extends Component {
     let songCount = this.songCount();
     let percent = 0;
 
+    console.log('this.state.seek: ', this.state.seek);
+    console.log('this.state.duration: ', this.state.duration);
     if (this.state.seek && this.state.duration) {
       percent = this.state.seek / this.state.duration;
     }

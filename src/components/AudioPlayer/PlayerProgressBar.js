@@ -33,6 +33,7 @@ export default class PlayerProgressBar extends Component {
     let containerStartX = container.offset().left;
     let percent = (e.clientX - containerStartX) / container.width();
     percent = percent >= 1 ? 1 : percent;
+    console.log('ProgressBar#seekTo.percent: ', percent);
     this.props.seekTo(percent);
   }
 
