@@ -11,6 +11,7 @@ import ApiClient from './helpers/ApiClient';
 import Html from './helpers/Html';
 import PrettyError from 'pretty-error';
 import http from 'http';
+import Mongoose from 'mongoose';
 
 import { match } from 'react-router';
 import { syncHistoryWithStore } from 'react-router-redux';
@@ -45,6 +46,24 @@ app.use('/ws', (req, res) => {
 server.on('upgrade', (req, socket, head) => {
   proxy.ws(req, socket, head);
 });
+
+// Database Configuration
+const connect = () => {
+  console.log('Mongoose#connect, connecting to dev db');
+  Mongoose.connect(
+    'mongodb://localhost/vinylwax',
+    {
+      db: {
+        safe: true
+      }
+    }
+  );
+};
+
+connect();
+
+Mongoose.connection.on('error', console.log);
+Mongoose.connection.on('disconnected', connect);
 
 // added the error handling to avoid https://github.com/nodejitsu/node-http-proxy/issues/527
 proxy.on('error', (error, req, res) => {
