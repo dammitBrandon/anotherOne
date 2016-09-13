@@ -23,9 +23,6 @@ export default class ButtonPanel extends Component {
 
   buttonClickHandler = () => {
     console.log('inside ButtonPanel#buttonClickHandler');
-    console.log('this.props.onPlayBtnClick: ', this.props.onPlayBtnClick());
-    console.log('this.props.onPauseBtnClick: ', this.props.onPauseBtnClick());
-    console.log('this.isShowPlayButton: ', this.isShowPlayButton());
     return this.isShowPlayButton() ? this.props.onPlayBtnClick() : this.props.onPauseBtnClick();
   }
 
