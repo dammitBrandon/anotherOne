@@ -4,16 +4,16 @@
 import 'babel-polyfill';
 import React from 'react';
 import ReactDOM from 'react-dom';
-import createStore from './redux/create';
-import ApiClient from './helpers/ApiClient';
+import createStore from 'redux/create';
+import ApiClient from 'helpers/ApiClient';
 import io from 'socket.io-client';
 import {Provider} from 'react-redux';
 import { Router, browserHistory } from 'react-router';
 import { syncHistoryWithStore } from 'react-router-redux';
 import { ReduxAsyncConnect } from 'redux-async-connect';
-import useScroll from 'scroll-behavior/lib/useStandardScroll';
+import useScroll from '../../node_modules/scroll-behavior/lib/useStandardScroll';
 
-import getRoutes from './routes';
+import getRoutes from './../server/routes';
 
 const client = new ApiClient();
 const _browserHistory = useScroll(() => browserHistory)();

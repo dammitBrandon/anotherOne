@@ -4,7 +4,7 @@ require('babel-polyfill');
 var fs = require('fs');
 var path = require('path');
 var webpack = require('webpack');
-var assetsPath = path.resolve(__dirname, '../static/dist');
+var assetsPath = path.resolve(__dirname, '../src/server/static/dist');
 var host = (process.env.HOST || 'localhost');
 var port = (+process.env.PORT + 1) || 3001;
 
@@ -67,9 +67,9 @@ module.exports = {
   entry: {
     'main': [
       'webpack-hot-middleware/client?path=http://' + host + ':' + port + '/__webpack_hmr',
-      'bootstrap-sass!./src/theme/bootstrap.config.js',
-      'font-awesome-webpack!./src/theme/font-awesome.config.js',
-      './src/client.js'
+      'bootstrap-sass!./src/client/theme/bootstrap.config.js',
+      'font-awesome-webpack!./src/client/theme/font-awesome.config.js',
+      './src/client/client.js'
     ]
   },
   output: {
@@ -95,7 +95,9 @@ module.exports = {
   progress: true,
   resolve: {
     modulesDirectories: [
-      'src',
+      'bin',
+      'src/server',
+      'src/client',
       'node_modules'
     ],
     extensions: ['', '.json', '.js', '.jsx']

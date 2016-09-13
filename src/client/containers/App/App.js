@@ -2,15 +2,15 @@ import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { IndexLink } from 'react-router';
 import { LinkContainer } from 'react-router-bootstrap';
-import Navbar from 'react-bootstrap/lib/Navbar';
-import Nav from 'react-bootstrap/lib/Nav';
-import NavItem from 'react-bootstrap/lib/NavItem';
+import Navbar from '../../../../node_modules/react-bootstrap/lib/Navbar';
+import Nav from '../../../../node_modules/react-bootstrap/lib/Nav';
+import NavItem from '../../../../node_modules/react-bootstrap/lib/NavItem';
 import Helmet from 'react-helmet';
 import { isLoaded as isInfoLoaded, load as loadInfo } from 'redux/modules/info';
 import { isLoaded as isAuthLoaded, load as loadAuth, logout } from 'redux/modules/auth';
 import { InfoBar } from 'components';
 import { push } from 'react-router-redux';
-import config from '../../config';
+import config from '../../../server/config';
 import { asyncConnect } from 'redux-async-connect';
 
 @asyncConnect([{

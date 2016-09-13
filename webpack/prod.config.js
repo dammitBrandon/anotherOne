@@ -8,7 +8,7 @@ var ExtractTextPlugin = require('extract-text-webpack-plugin');
 var strip = require('strip-loader');
 
 var projectRootPath = path.resolve(__dirname, '../');
-var assetsPath = path.resolve(projectRootPath, './static/dist');
+var assetsPath = path.resolve(projectRootPath, './src/server/static/dist');
 
 // https://github.com/halt-hammerzeit/webpack-isomorphic-tools
 var WebpackIsomorphicToolsPlugin = require('webpack-isomorphic-tools/plugin');
@@ -19,16 +19,16 @@ module.exports = {
   context: path.resolve(__dirname, '..'),
   entry: {
     'main': [
-      'bootstrap-sass!./src/theme/bootstrap.config.prod.js',
-      'font-awesome-webpack!./src/theme/font-awesome.config.prod.js',
-      './src/client.js'
+      'bootstrap-sass!./src/client/theme/bootstrap.config.prod.js',
+      'font-awesome-webpack!./src/client/theme/font-awesome.config.prod.js',
+      './src/client/client.js'
     ]
   },
   output: {
     path: assetsPath,
     filename: '[name]-[chunkhash].js',
     chunkFilename: '[name]-[chunkhash].js',
-    publicPath: '/dist/'
+    publicPath: '/src/server/dist/'
   },
   module: {
     loaders: [
@@ -47,7 +47,8 @@ module.exports = {
   progress: true,
   resolve: {
     modulesDirectories: [
-      'src',
+      'src/server',
+      'src/client',
       'node_modules'
     ],
     extensions: ['', '.json', '.js', '.jsx']
