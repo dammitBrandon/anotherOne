@@ -48,19 +48,20 @@ app.use(Express.static(path.join(__dirname, '..', 'static')));
 // Init sessions and auth
 app.use(session({
   secret: 'shhhitsasecret',
-  resave: false,
   saveUninitialized: true,
-
+  resave: true,
+  proxy: true,
   cookie: {
+    secure: false,
     maxAge: 3600000
   },
-
   store: new MongoStore({
     url: 'mongodb://localhost/vinylwax'
   })
 }));
 
 app.use(passport.initialize());
+app.use(session());
 
 // Proxy to API server
 app.use('/api', (req, res) => {
