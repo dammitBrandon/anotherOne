@@ -3,6 +3,10 @@ import React from 'react';
 import ReactDOM from 'react-dom/server';
 import config from './config';
 import favicon from 'serve-favicon';
+import cookieParser from 'cookie-parser';
+import bodyParser from 'body-parser';
+import passport from 'passport';
+import session from 'express-session';
 import compression from 'compression';
 import httpProxy from 'http-proxy';
 import path from 'path';
@@ -12,6 +16,8 @@ import Html from './helpers/Html';
 import PrettyError from 'pretty-error';
 import http from 'http';
 import Mongoose from 'mongoose';
+import connectMongo from 'connect-mongo';
+
 
 import { match } from 'react-router';
 import { syncHistoryWithStore } from 'react-router-redux';
@@ -22,6 +28,7 @@ import getRoutes from './routes';
 
 const targetUrl = 'http://' + config.apiHost + ':' + config.apiPort;
 const pretty = new PrettyError();
+const MongoStore = connectMongo(session);
 const app = new Express();
 const server = new http.Server(app);
 const proxy = httpProxy.createProxyServer({
@@ -29,10 +36,31 @@ const proxy = httpProxy.createProxyServer({
   ws: true
 });
 
+app.use(cookieParser());
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
+
 app.use(compression());
 app.use(favicon(path.join(__dirname, '..', 'static', 'favicon.ico')));
 
 app.use(Express.static(path.join(__dirname, '..', 'static')));
+
+// Init sessions and auth
+app.use(session({
+  secret: 'shhhitsasecret',
+  resave: false,
+  saveUninitialized: true,
+
+  cookie: {
+    maxAge: 3600000
+  },
+
+  store: new MongoStore({
+    url: 'mongodb://localhost/vinylwax'
+  })
+}));
+
+app.use(passport.initialize());
 
 // Proxy to API server
 app.use('/api', (req, res) => {
