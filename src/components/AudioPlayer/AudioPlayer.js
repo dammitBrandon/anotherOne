@@ -5,12 +5,19 @@ import VolumeBar from './VolumeBar';
 import TimeLabel from './TimeLabel';
 import NameLabel from './NameLabel';
 import SongList from './SongList';
+import {bindActionCreators} from 'redux';
+import {connect} from 'react-redux';
+import * as playerSessionActions from 'redux/modules/playerSession';
 import Howler from 'howler';
 import SongFormatter from './../../utils/SongFormatter';
 import $ from 'jquery';
 
 const Howl = Howler.Howl;
 
+@connect(
+  state => ({playButtonClickedCount: state.playerSession.playButtonClickedCount, pauseButtonClickedCount: state.playerSession.pauseButtonClickedCount}),
+  dispatch => bindActionCreators(playerSessionActions, dispatch)
+)
 export default class AudioPlayer extends Component {
   constructor(props) {
     super(props);
@@ -24,13 +31,17 @@ export default class AudioPlayer extends Component {
     };
 
     this.props = {
-      array: []
+      songs: []
     };
-  }
+  };
 
   static propTypes = {
-    songs: PropTypes.array
-  }
+    songs: PropTypes.array,
+    playButtonClickedCount: PropTypes.number,
+    pauseButtonClickedCount: PropTypes.number,
+    incrementPlayButton: PropTypes.func.isRequired,
+    incrementPauseButton: PropTypes.func.isRequired
+  };
 
   componentWillMount = () => {
     console.log('AudioPlayer#componentWillMount');
@@ -65,6 +76,7 @@ export default class AudioPlayer extends Component {
 
   onPlayBtnClick = () => {
     console.log('AudioPlayer#onPlayBtnClick');
+    this.props.incrementPlayButton();
     if (this.state.isPlaying && !this.state.isPause) {
       return;
     }
@@ -73,6 +85,7 @@ export default class AudioPlayer extends Component {
 
   onPauseBtnClick = () => {
     console.log('AudioPlayer#onPauseBtnClick');
+    this.props.incrementPauseButton();
     let isPause = !this.state.isPause;
     this.setState({ isPause: isPause });
     isPause ? this.pause() : this._play();
@@ -262,6 +275,7 @@ export default class AudioPlayer extends Component {
     const styles = require('./audioPlayer.scss');
     let songCount = this.songCount();
     let percent = 0;
+    const {songs} = this.props; // eslint-disable-line no-shadow
 
     console.log('this.state.seek: ', this.state.seek);
     console.log('this.state.duration: ', this.state.duration);
@@ -302,7 +316,8 @@ export default class AudioPlayer extends Component {
          <NameLabel name={songName} />
          <TimeLabel seek={this.state.seek} duration={this.state.duration} />
        </div>
-
+        <span>pauseClicked: {this.props.pauseButtonClickedCount}</span>
+        <span>playClicked: {this.props.playButtonClickedCount}</span>
      </div>
     );
   }

@@ -46,19 +46,7 @@ app.use(favicon(path.join(__dirname, '..', 'static', 'favicon.ico')));
 app.use(Express.static(path.join(__dirname, '..', 'static')));
 
 // Init sessions and auth
-app.use(session({
-  secret: 'shhhitsasecret',
-  saveUninitialized: true,
-  resave: true,
-  proxy: true,
-  cookie: {
-    secure: false,
-    maxAge: 3600000
-  },
-  store: new MongoStore({
-    url: 'mongodb://localhost/vinylwax'
-  })
-}));
+app.use(session({ secret: '<shhhitsasecret>', saveUninitialized: true, resave: true, proxy: true, cookie: {path: '/', secure: false, maxAge: 60000 }, store: new MongoStore({ url: 'mongodb://localhost/vinylwax' })}));
 
 app.use(passport.initialize());
 app.use(session());
@@ -131,12 +119,14 @@ app.use((req, res) => {
 
   match({ history, routes: getRoutes(store), location: req.originalUrl }, (error, redirectLocation, renderProps) => {
     if (redirectLocation) {
+      console.log('current session:::: ', req.session);
       res.redirect(redirectLocation.pathname + redirectLocation.search);
     } else if (error) {
       console.error('ROUTER ERROR:', pretty.render(error));
       res.status(500);
       hydrateOnClient();
     } else if (renderProps) {
+      console.log('renderProps: ', renderProps);
       loadOnServer({...renderProps, store, helpers: {client}}).then(() => {
         const component = (
           <Provider store={store} key="provider">
