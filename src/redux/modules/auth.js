@@ -13,6 +13,8 @@ const initialState = {
 };
 
 export default function reducer(state = initialState, action = {}) {
+  console.log('auth#reducer: ', action);
+  console.log('auth#state: ', state);
   switch (action.type) {
     case LOAD:
       return {
@@ -34,6 +36,7 @@ export default function reducer(state = initialState, action = {}) {
         error: action.error
       };
     case LOGIN:
+      console.log('Login case, state: ', state);
       return {
         ...state,
         loggingIn: true
@@ -85,6 +88,7 @@ export function load() {
 }
 
 export function login(name) {
+  console.log('redux modules auth#login');
   return {
     types: [LOGIN, LOGIN_SUCCESS, LOGIN_FAIL],
     promise: (client) => client.post('/login', {

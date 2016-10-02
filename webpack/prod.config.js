@@ -44,6 +44,9 @@ module.exports = {
       { test: webpackIsomorphicToolsPlugin.regular_expression('images'), loader: 'url-loader?limit=10240' }
     ]
   },
+  node: {
+    process: false
+  },
   progress: true,
   resolve: {
     modulesDirectories: [

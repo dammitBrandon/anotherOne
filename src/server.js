@@ -28,7 +28,7 @@ import getRoutes from './routes';
 
 const targetUrl = 'http://' + config.apiHost + ':' + config.apiPort;
 const pretty = new PrettyError();
-const MongoStore = connectMongo(session);
+// const MongoStore = connectMongo(session);
 const app = new Express();
 const server = new http.Server(app);
 const proxy = httpProxy.createProxyServer({
@@ -46,10 +46,10 @@ app.use(favicon(path.join(__dirname, '..', 'static', 'favicon.ico')));
 app.use(Express.static(path.join(__dirname, '..', 'static')));
 
 // Init sessions and auth
-app.use(session({ secret: '<shhhitsasecret>', saveUninitialized: true, resave: true, proxy: true, cookie: {path: '/', secure: false, maxAge: 60000 }, store: new MongoStore({ url: 'mongodb://localhost/vinylwax' })}));
+// app.use(session({ secret: '<shhhitsasecret>', saveUninitialized: true, resave: true, proxy: true, cookie: {path: '/', secure: false, maxAge: 60000 }, store: new MongoStore({ url: 'mongodb://localhost/vinylwax' })}));
 
-app.use(passport.initialize());
-app.use(session());
+// app.use(passport.initialize());
+// app.use(session());
 
 // Proxy to API server
 app.use('/api', (req, res) => {
@@ -65,22 +65,22 @@ server.on('upgrade', (req, socket, head) => {
 });
 
 // Database Configuration
-const connect = () => {
-  console.log('Mongoose#connect, connecting to dev db');
-  Mongoose.connect(
-    'mongodb://localhost/vinylwax',
-    {
-      db: {
-        safe: true
-      }
-    }
-  );
-};
+// const connect = () => {
+//   console.log('Mongoose#connect, connecting to dev db');
+//   Mongoose.connect(
+//     'mongodb://localhost/vinylwax',
+//     {
+//       db: {
+//         safe: true
+//       }
+//     }
+//   );
+// };
 
-connect();
+// connect();
 
-Mongoose.connection.on('error', console.log);
-Mongoose.connection.on('disconnected', connect);
+// Mongoose.connection.on('error', console.log);
+// Mongoose.connection.on('disconnected', connect);
 
 // added the error handling to avoid https://github.com/nodejitsu/node-http-proxy/issues/527
 proxy.on('error', (error, req, res) => {
@@ -98,6 +98,7 @@ proxy.on('error', (error, req, res) => {
 
 app.use((req, res) => {
   if (__DEVELOPMENT__) {
+    console.log('env __DEVELOPMENT__ : ', __DEVELOPMENT__);
     // Do not cache webpack stats: the script file would change since
     // hot module replacement is enabled in the development env
     webpackIsomorphicTools.refresh();
@@ -108,6 +109,7 @@ app.use((req, res) => {
   const history = syncHistoryWithStore(memoryHistory, store);
 
   function hydrateOnClient() {
+    console.log('#hydrateOnClient.store: ', store);
     res.send('<!doctype html>\n' +
       ReactDOM.renderToString(<Html assets={webpackIsomorphicTools.assets()} store={store}/>));
   }
@@ -118,8 +120,9 @@ app.use((req, res) => {
   }
 
   match({ history, routes: getRoutes(store), location: req.originalUrl }, (error, redirectLocation, renderProps) => {
+    console.log('current session:::: ', req.session);
     if (redirectLocation) {
-      console.log('current session:::: ', req.session);
+      console.log('redirectLocation: ', redirectLocation);
       res.redirect(redirectLocation.pathname + redirectLocation.search);
     } else if (error) {
       console.error('ROUTER ERROR:', pretty.render(error));
@@ -128,11 +131,15 @@ app.use((req, res) => {
     } else if (renderProps) {
       console.log('renderProps: ', renderProps);
       loadOnServer({...renderProps, store, helpers: {client}}).then(() => {
+
         const component = (
           <Provider store={store} key="provider">
             <ReduxAsyncConnect {...renderProps} />
           </Provider>
         );
+
+        console.log('component: ', component);
+        console.log('store: ', store);
 
         res.status(200);
 

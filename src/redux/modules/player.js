@@ -1,11 +1,11 @@
+import $ from 'jquery';
 // Action types
-const INCREMENT_PLAY_BUTTON = 'INCREMENT_PLAY_BUTTON';
-const INCREMENT_PAUSE_BUTTON = 'INCREMENT_PAUSE_BUTTON';
-const SEEK_TO_ACTION = 'SEEK_TO_ACTION';
-const SAVE = "SAVE";
-const SAVE_SUCCESS = "SAVE_SUCCESS";
-const SAVE_FAILURE = "SAVE_FAILURE";
-
+const INCREMENT_PLAY_BUTTON = 'player/INCREMENT_PLAY_BUTTON';
+const INCREMENT_PAUSE_BUTTON = 'player/INCREMENT_PAUSE_BUTTON';
+const SEEK_TO_ACTION = 'player/SEEK_TO_ACTION';
+const SAVE = "player/SAVE";
+const SAVE_SUCCESS = "player/SAVE_SUCCESS";
+const SAVE_FAIL = "player/SAVE_FAIL";
 
 // Initial state
 const initialState = {
@@ -17,7 +17,8 @@ const initialState = {
 
 // Action Creators
 export default function reducer(state = initialState, action = {}) {
-  console.log('playerSession#reducer: ', action);
+  console.log('player#reducer: ', action);
+  console.log('player#state: ', state);
   switch (action.type) {
     case INCREMENT_PLAY_BUTTON:
       console.log('INCREMENT_PLAY_BUTTON');
@@ -28,7 +29,7 @@ export default function reducer(state = initialState, action = {}) {
       };
     case INCREMENT_PAUSE_BUTTON:
       console.log('INCREMENT_PAUSE_BUTTON');
-      const {pauseButtonClickedCount} = state;
+      const { pauseButtonClickedCount } = state;
       return {
         ...state,
         pauseButtonClickedCount: pauseButtonClickedCount + 1
@@ -41,7 +42,7 @@ export default function reducer(state = initialState, action = {}) {
       };
     case SAVE:
       console.log('SAVE');
-      return state;
+      return {...state};
     case SAVE_SUCCESS:
       console.log('SAVE_SUCCESS');
       const data = [...state.data];
@@ -49,7 +50,7 @@ export default function reducer(state = initialState, action = {}) {
         ...state,
         data: data
       };
-    case SAVE_FAILURE:
+    case SAVE_FAIL:
       console.log('SAVE_FAILURE');
       return {
         ...state,
@@ -63,32 +64,46 @@ export default function reducer(state = initialState, action = {}) {
 };
 
 export function incrementPlayButton() {
-  console.log('playerSession#incrementPlayButton');
+  console.log('player#incrementPlayButton');
   return {
     type: INCREMENT_PLAY_BUTTON
   };
 };
 
 export function incrementPauseButton() {
-  console.log('playerSession#incrementPauseButton');
+  console.log('player#incrementPauseButton');
   return {
     type: INCREMENT_PAUSE_BUTTON
   };
 };
 
 export function seekToActionPerformed() {
-  console.log('playerSession#seekToActionPerformed');
+  console.log('player#seekToActionPerformed');
   return {
     type: SEEK_TO_ACTION
   };
 };
 
-export function saveSession(data) {
-  console.log('playerSession#saveSession data: ', data);
+function recievePlayerData(playerData) {
+  console.log(playerData);
   return {
-    types: [SAVE, SAVE_SUCCESS, SAVE_FAILURE],
-    promise: (client) => client.post('/player', {
-      data: data
+    type: [SAVE, SAVE_SUCCESS, SAVE_FAIL],
+    playerData
+  }
+}
+
+export function save(playbackData){
+  return dispatch => {
+    console.log('player#save data: ', playbackData);
+    return $.ajax({
+      type: 'POST',
+      url: '/player',
+      data: playbackData
     })
-  };
+    .then(playerData => {
+      console.log('dispatch playerData:', playerData);
+
+      dispatch(recievePlayerData(playerData));
+    })
+  }
 };

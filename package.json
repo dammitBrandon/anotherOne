@@ -1,7 +1,7 @@
 {
-  "name": "react-redux-universal-hot-example",
-  "description": "Example of an isomorphic (universal) webapp using react redux and hot reloading",
-  "author": "Erik Rasmussen <rasmussenerik@gmail.com> (http://github.com/erikras)",
+  "name": "VinylWaxMedia",
+  "description": "Audio Player",
+  "author": "Brandon Bailey <bailey1.brandon@gmail.com> (http://github.com/dammitBrandon)",
   "license": "MIT",
   "version": "0.0.1",
   "repository": {
@@ -9,19 +9,6 @@
     "url": "https://github.com/erikras/react-redux-universal-hot-example"
   },
   "homepage": "https://github.com/erikras/react-redux-universal-hot-example",
-  "keywords": [
-    "react",
-    "isomorphic",
-    "universal",
-    "webpack",
-    "express",
-    "hot reloading",
-    "react-hot-reloader",
-    "redux",
-    "starter",
-    "boilerplate",
-    "babel"
-  ],
   "main": "bin/server.js",
   "scripts": {
     "start": "concurrent --kill-others \"npm run start-prod\" \"npm run start-prod-api\"",
@@ -44,6 +31,7 @@
       "env": {
         "NODE_PATH": "./src",
         "NODE_ENV": "production",
+        "PORT": 8080,
         "APIPORT": 3030
       }
     },
@@ -82,7 +70,7 @@
       }
     },
     "build": {
-      "command": "webpack --verbose --colors --display-error-details --config webpack/prod.config.js",
+      "command": "webpack --verbose --colors --display-error-details --config webpack/dev.config.js",
       "env": {
         "NODE_ENV": "production"
       }
@@ -117,6 +105,7 @@
     "http-proxy": "^1.12.0",
     "invariant": "^2.2.0",
     "jquery": "^2.2.0",
+    "qwest": "4.4.5",
     "lodash": "^3.10.1",
     "less": "^2.5.3",
     "less-loader": "^2.2.1",
@@ -180,6 +169,7 @@
     "karma-sourcemap-loader": "^0.3.5",
     "karma-webpack": "^1.7.0",
     "mocha": "^2.3.3",
+    "node-inspector": "0.12.8",
     "node-sass": "^3.4.2",
     "phantomjs": "^1.9.18",
     "phantomjs-polyfill": "0.0.1",

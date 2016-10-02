@@ -7,7 +7,7 @@ import NameLabel from './NameLabel';
 import SongList from './SongList';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
-import * as playerSessionActions from 'redux/modules/playerSession';
+import * as playerSessionActions from 'redux/modules/player';
 import Howler from 'howler';
 import SongFormatter from './../../utils/SongFormatter';
 import $ from 'jquery';
@@ -40,7 +40,8 @@ export default class AudioPlayer extends Component {
     playButtonClickedCount: PropTypes.number,
     pauseButtonClickedCount: PropTypes.number,
     incrementPlayButton: PropTypes.func.isRequired,
-    incrementPauseButton: PropTypes.func.isRequired
+    incrementPauseButton: PropTypes.func.isRequired,
+    save: PropTypes.func.isRequired
   };
 
   componentWillMount = () => {
@@ -72,6 +73,11 @@ export default class AudioPlayer extends Component {
     if (this.state.isPlaying && this.state.currentSongIndex != prevState.currentSongIndex) {
       this.initSoundObject();
     }
+  }
+
+  componentWillUnmount = () => {
+    console.log('AudioPlayer#componentWillUnmount');
+    this.props.save({playButtonClicked: this.props.playButtonClickedCount, pauseButtonClicked: this.props.pauseButtonClickedCount});
   }
 
   onPlayBtnClick = () => {
@@ -316,8 +322,9 @@ export default class AudioPlayer extends Component {
          <NameLabel name={songName} />
          <TimeLabel seek={this.state.seek} duration={this.state.duration} />
        </div>
-        <span>pauseClicked: {this.props.pauseButtonClickedCount}</span>
-        <span>playClicked: {this.props.playButtonClickedCount}</span>
+      <span>pauseClicked: {this.props.pauseButtonClickedCount}</span>
+      <br/>
+      <span>playClicked: {this.props.playButtonClickedCount}</span>
      </div>
     );
   }

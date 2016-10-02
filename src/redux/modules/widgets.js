@@ -14,6 +14,8 @@ const initialState = {
 };
 
 export default function reducer(state = initialState, action = {}) {
+  console.log('widgets#reducer ', action);
+  console.log('widgets#state ', state);
   switch (action.type) {
     case LOAD:
       return {
@@ -83,10 +85,12 @@ export default function reducer(state = initialState, action = {}) {
 }
 
 export function isLoaded(globalState) {
+  console.log('widgets#isLoaded, globalState: ', globalState);
   return globalState.widgets && globalState.widgets.loaded;
 }
 
 export function load() {
+  console.log('widgets#load');
   return {
     types: [LOAD, LOAD_SUCCESS, LOAD_FAIL],
     promise: (client) => client.get('/widget/load/param1/param2') // params not used, just shown as demonstration
@@ -94,6 +98,7 @@ export function load() {
 }
 
 export function save(widget) {
+  console.log('widgets#save, ', widget);
   return {
     types: [SAVE, SAVE_SUCCESS, SAVE_FAIL],
     id: widget.id,
@@ -104,9 +109,11 @@ export function save(widget) {
 }
 
 export function editStart(id) {
+  console.log('widgets#editStart, id: ', id);
   return { type: EDIT_START, id };
 }
 
 export function editStop(id) {
+  console.log('widgets#editStop, id: ', id)
   return { type: EDIT_STOP, id };
 }
