@@ -3,19 +3,13 @@ import createMiddleware from './middleware/clientMiddleware';
 import { routerMiddleware } from 'react-router-redux';
 
 export default function createStore(history, client, data) {
-  console.log('create#createStore');
-  console.log('createStore#history ', history);
   // Sync dispatched route actions to the history
   const reduxRouterMiddleware = routerMiddleware(history);
 
   const middleware = [createMiddleware(client), reduxRouterMiddleware];
 
   let finalCreateStore;
-  console.log('__DEVELOPMENT__ : ', __DEVELOPMENT__);
-  console.log('__CLIENT__ : ', __CLIENT__);
-  console.log('__DEVTOOLS__ : ', __DEVTOOLS__);
   if (__DEVELOPMENT__ && __CLIENT__ && __DEVTOOLS__) {
-    console.log('create final store in dev');
     const { persistState } = require('redux-devtools');
     const DevTools = require('../containers/DevTools/DevTools');
     finalCreateStore = compose(
@@ -24,17 +18,14 @@ export default function createStore(history, client, data) {
       persistState(window.location.href.match(/[?&]debug_session=([^&]+)\b/))
     )(_createStore);
   } else {
-    console.log('create store in prod');
     finalCreateStore = applyMiddleware(...middleware)(_createStore);
   }
 
   const reducer = require('./modules/reducer');
-  console.log('createStore#finalCreateStore');
   const store = finalCreateStore(reducer, data);
 
 
   if (__DEVELOPMENT__ && module.hot) {
-    console.log('__DEVELOPMENT__ && module.hot');
     module.hot.accept('./modules/reducer', () => {
       store.replaceReducer(require('./modules/reducer'));
     });

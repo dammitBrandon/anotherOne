@@ -15,7 +15,7 @@ import $ from 'jquery';
 const Howl = Howler.Howl;
 
 @connect(
-  state => ({playButtonClickedCount: state.playerSession.playButtonClickedCount, pauseButtonClickedCount: state.playerSession.pauseButtonClickedCount}),
+  state => ({playButtonClickedCount: state.player.playButtonClickedCount, pauseButtonClickedCount: state.player.pauseButtonClickedCount}),
   dispatch => bindActionCreators(playerSessionActions, dispatch)
 )
 export default class AudioPlayer extends Component {

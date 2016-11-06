@@ -1,6 +1,5 @@
 module.exports = {
   secondsToTime: function(secs) {
-    console.log('inside TimeFormatterMixin#secondsToTime');
     secs = Math.round(secs);
     let hours = Math.floor(secs / (60 * 60));
     let divisor_for_minutes = secs % (60 * 60);

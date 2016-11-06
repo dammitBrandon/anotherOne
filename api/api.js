@@ -47,7 +47,6 @@ app.use(bodyParser.urlencoded({ extended: false }));
 
 // Database Configuration
 const connect = () => {
-  console.log('Mongoose#connect, connecting to dev db');
   Mongoose.connect(
     'mongodb://localhost/vinylwax',
     {
@@ -63,19 +62,12 @@ connect();
 Mongoose.connection.on('error', console.log);
 Mongoose.connection.on('disconnected', connect);
 
-app.post('/player', (req, res) => {
-  console.log('Working!!!');
-})
 app.use((req, res) => {
-  // console.log('req:', req);
   const splittedUrlPath = req.url.split('?')[0].split('/').slice(1);
-  console.log('splittedUrlPath: ', splittedUrlPath);
   const {action, params} = mapUrl(actions, splittedUrlPath);
-  console.log('action: ', action);
   if (action) {
     action(req, params)
       .then((result) => {
-        console.log('result ::', result);
         if (result instanceof Function) {
           result(res);
         } else {

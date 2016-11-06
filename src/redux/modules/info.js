@@ -7,8 +7,6 @@ const initialState = {
 };
 
 export default function info(state = initialState, action = {}) {
-  console.log('info#reducer: ', action);
-  console.log('info#state: ', state);
   switch (action.type) {
     case LOAD:
       return {
@@ -35,12 +33,10 @@ export default function info(state = initialState, action = {}) {
 }
 
 export function isLoaded(globalState) {
-  console.log('info#isLoaded, globalState: ', globalState);
   return globalState.info && globalState.info.loaded;
 }
 
 export function load() {
-  console.log('info#load');
   return {
     types: [LOAD, LOAD_SUCCESS, LOAD_FAIL],
     promise: (client) => client.get('/loadInfo')

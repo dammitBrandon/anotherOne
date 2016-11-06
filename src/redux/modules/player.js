@@ -17,41 +17,33 @@ const initialState = {
 
 // Action Creators
 export default function reducer(state = initialState, action = {}) {
-  console.log('player#reducer: ', action);
-  console.log('player#state: ', state);
   switch (action.type) {
     case INCREMENT_PLAY_BUTTON:
-      console.log('INCREMENT_PLAY_BUTTON');
       const {playButtonClickedCount} = state;
       return {
         ...state,
         playButtonClickedCount: playButtonClickedCount + 1
       };
     case INCREMENT_PAUSE_BUTTON:
-      console.log('INCREMENT_PAUSE_BUTTON');
       const { pauseButtonClickedCount } = state;
       return {
         ...state,
         pauseButtonClickedCount: pauseButtonClickedCount + 1
       };
     case SEEK_TO_ACTION:
-      console.log('SEEK_TO_ACTION');
       return {
         ...state,
         seekToAction: true
       };
     case SAVE:
-      console.log('SAVE');
       return {...state};
     case SAVE_SUCCESS:
-      console.log('SAVE_SUCCESS');
       const data = [...state.data];
       return {
         ...state,
         data: data
       };
     case SAVE_FAIL:
-      console.log('SAVE_FAILURE');
       return {
         ...state,
         saveError: {
@@ -64,46 +56,51 @@ export default function reducer(state = initialState, action = {}) {
 };
 
 export function incrementPlayButton() {
-  console.log('player#incrementPlayButton');
   return {
     type: INCREMENT_PLAY_BUTTON
   };
 };
 
 export function incrementPauseButton() {
-  console.log('player#incrementPauseButton');
   return {
     type: INCREMENT_PAUSE_BUTTON
   };
 };
 
 export function seekToActionPerformed() {
-  console.log('player#seekToActionPerformed');
   return {
     type: SEEK_TO_ACTION
   };
 };
 
 function recievePlayerData(playerData) {
-  console.log(playerData);
   return {
-    type: [SAVE, SAVE_SUCCESS, SAVE_FAIL],
+    types: [SAVE, SAVE_SUCCESS, SAVE_FAIL],
     playerData
   }
 }
 
-export function save(playbackData){
-  return dispatch => {
-    console.log('player#save data: ', playbackData);
-    return $.ajax({
-      type: 'POST',
-      url: '/player',
-      data: playbackData
-    })
-    .then(playerData => {
-      console.log('dispatch playerData:', playerData);
+// export function save(playbackData){
+//   return dispatch => {
+//     return $.ajax({
+//       type: 'POST',
+//       url: '/player',
+//       data: playbackData
+//     })
+//     .then(playerData => {
+//
+//       dispatch(recievePlayerData(playerData));
+//     })
+//   }
+// };
 
-      dispatch(recievePlayerData(playerData));
+export function save(playbackData){
+  return {
+    types: [SAVE, SAVE_SUCCESS, SAVE_FAIL],
+    promise: (client) => client.post('/player', {
+      data: {
+        playbackData: playbackData
+      }
     })
-  }
-};
+  };
+}

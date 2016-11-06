@@ -7,9 +7,7 @@ const initialState = {
 };
 
 export default function reducer(state = initialState, action = {}) {
-  console.log('survey#reducer ', action);
-  console.log('survey#state ', state);
-  
+
   switch (action.type) {
     case IS_VALID:
       return state; // 'saving' flag handled by redux-form
@@ -32,7 +30,6 @@ export default function reducer(state = initialState, action = {}) {
 }
 
 export function isValidEmail(data) {
-  console.log('survey#isValidEmail, data: ', data);
   return {
     types: [IS_VALID, IS_VALID_SUCCESS, IS_VALID_FAIL],
     promise: (client) => client.post('/survey/isValid', {
